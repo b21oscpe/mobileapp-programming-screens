@@ -1,33 +1,57 @@
 
 # Rapport
 
-**Skriv din rapport här!**
-
-_Du kan ta bort all text som finns sedan tidigare_.
-
-## Följande grundsyn gäller dugga-svar:
-
-- Ett kortfattat svar är att föredra. Svar som är längre än en sida text (skärmdumpar och programkod exkluderat) är onödigt långt.
-- Svaret skall ha minst en snutt programkod.
-- Svaret skall inkludera en kort övergripande förklarande text som redogör för vad respektive snutt programkod gör eller som svarar på annan teorifråga.
-- Svaret skall ha minst en skärmdump. Skärmdumpar skall illustrera exekvering av relevant programkod. Eventuell text i skärmdumpar måste vara läsbar.
-- I de fall detta efterfrågas, dela upp delar av ditt svar i för- och nackdelar. Dina för- respektive nackdelar skall vara i form av punktlistor med kortare stycken (3-4 meningar).
-
-Programkod ska se ut som exemplet nedan. Koden måste vara korrekt indenterad då den blir lättare att läsa vilket gör det lättare att hitta syntaktiska fel.
+**Uppgift 4: Activities & Intents**
 
 ```
-function errorCallback(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            // Geolocation API stöds inte, gör något
-            break;
-        case error.POSITION_UNAVAILABLE:
-            // Misslyckat positionsanrop, gör något
-            break;
-        case error.UNKNOWN_ERROR:
-            // Okänt fel, gör något
-            break;
-    }
+// Här skapar vi variabler för text-input fältet samt knappen som ligger under text-fältet.
+// Efter det säger vi med hjälp av intents att "OnClick()", alltså när man trycker på knappen, ska man tas till "SecondActivity".
+// Vi skickar med variabeln "username" som string med hjälp av extras.
+
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    username = findViewById(R.id.signin_name);
+
+    signIn = findViewById(R.id.signin_button);
+    signIn.setOnClickListener(new View.OnClickListener() {
+
+        @Override
+        public void onClick(View view) {
+            Log.d("==>", "Signed in!");
+            Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+            intent.putExtra("username", username.getText(). toString());
+            startActivity(intent);
+        }
+    });
+}
+
+// Här tar vi emot och använder oss av "username" variabeln som vi skrev in tidigare.
+// Vi skapar även en knapp här, för att "logga ut".
+
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_second);
+
+    signout = findViewById(R.id.signout_button);
+    usernameview = findViewById(R.id.welcome_text);
+
+    Intent intent = getIntent();
+    Bundle extras = intent.getExtras();
+
+    String username = extras.getString("username");
+
+    usernameview.setText("Välkommen: " + username);
+
+    signout.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(SecondActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    });
 }
 ```
 
