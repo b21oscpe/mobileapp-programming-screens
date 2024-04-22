@@ -3,11 +3,11 @@
 
 **Uppgift 4: Activities & Intents**
 
-```
-// Här skapar vi variabler för text-input fältet samt knappen som ligger under text-fältet.
-// Efter det säger vi med hjälp av intents att "OnClick()", alltså när man trycker på knappen, ska man tas till "SecondActivity".
-// Vi skickar med variabeln "username" som string med hjälp av extras.
 
+Här skapar vi variabler för text-input fältet samt knappen som ligger under text-fältet.
+Efter det säger vi med hjälp av intents att "OnClick()", alltså när man trycker på knappen, ska man tas till "SecondActivity".
+Vi skickar med variabeln "username" som string med hjälp av extras.
+```
 protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
@@ -26,33 +26,32 @@ protected void onCreate(Bundle savedInstanceState) {
         }
     });
 }
-
-// Här tar vi emot och använder oss av "username" variabeln som vi skrev in tidigare.
-// Vi skapar även en knapp här, för att "logga ut".
-
+```
+Här tar vi emot och använder oss av "username" variabeln som vi skrev in tidigare.
+Vi skapar även en knapp här, för att "logga ut".
+```
 protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_second);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_second);
 
-    signout = findViewById(R.id.signout_button);
-    usernameview = findViewById(R.id.welcome_text);
+        signout = findViewById(R.id.signout_button);
+        usernameview = findViewById(R.id.welcome_text);
 
-    Intent intent = getIntent();
-    Bundle extras = intent.getExtras();
-
-    String username = extras.getString("username");
-
-    usernameview.setText("Välkommen: " + username);
-
-    signout.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(SecondActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
+        Intent intent = getIntent();
+        if (intent != null) {
+            String username = intent.getStringExtra("username");
+            usernameview.setText("Välkommen: " + username);
         }
-    });
-}
+
+        signout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SecondActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
 ```
 
 ![](login.png)
