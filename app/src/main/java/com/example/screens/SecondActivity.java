@@ -22,11 +22,10 @@ public class SecondActivity extends AppCompatActivity {
         usernameview = findViewById(R.id.welcome_text);
 
         Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-
-        String username = extras.getString("username");
-
-        usernameview.setText("Välkommen: " + username);
+        if (intent != null) {
+            String username = intent.getStringExtra("username");
+            usernameview.setText("Välkommen: " + username);
+        }
 
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
